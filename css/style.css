@@ -169,12 +169,24 @@ header nav a.logo img {
 .hero-content h1 { font-size: clamp(2.5rem, 8vw, 5rem); color: var(--heading-color); }
 .hero-content .subtitle { font-size: clamp(1rem, 4vw, 1.5rem); margin-bottom: 30px; }
 
-.about-content { display: flex; align-items: center; gap: 40px; }
+.about-content { 
+    display: flex; 
+    align-items: center; 
+    gap: 3rem; /* Increased gap for better spacing */
+}
 .about-image img { 
-    width: 400px; 
-    height: 400px; 
+    width: 450px;   /* Increased from 400px */
+    height: 450px;  /* Increased from 400px */
     border-radius: 10%; 
-    object-fit: cover; }
+    object-fit: cover; 
+}
+.about-text {
+    background: rgba(26, 26, 46, 0.6); /* Semi-transparent glass background */
+    backdrop-filter: blur(10px);      /* The frosted glass effect */
+    border-radius: 15px;              /* Rounded corners for the card */
+    padding: 2.5rem;                  /* Space inside the card */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* A subtle border to catch the light */
+}
 .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 .news-item {
     background: var(--glass-card-background);
@@ -363,6 +375,19 @@ footer.content-section {
 .resume-item { margin-bottom: 20px; }
 .resume-item h4 { font-size: 1.2em; color: var(--heading-color); }
 .skills-list span { display: inline-block; background: var(--dark-bg); padding: 8px 15px; border-radius: 5px; margin: 5px; }
+.meme-container {
+    max-width: 600px; /* Control the max size of the meme */
+    margin: 0 auto; /* Center the container */
+    text-align: center; /* Center the button below the image */
+}
+
+.meme-container img {
+    width: 100%; /* Make the image responsive */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px;
+    margin-bottom: 2rem; /* Space between image and button */
+    background-color: var(--card-background); /* Placeholder color */
+}
 
 /* --- GitHub Stats Page --- */
 .github-card { max-width: 700px; margin: 0 auto; background: var(--card-background); border-radius: 15px; border: 1px solid var(--border-color); overflow: hidden; }
@@ -490,6 +515,11 @@ footer.content-section {
         cursor: pointer;
     }
     .about-content { flex-direction: column; text-align: center; }
+    .about-image img {
+    width: 300px; /* A more suitable size for mobile */
+    height: 300px;
+    }
+    /* Adjust the blog layout for mobile */
     .blog-layout { flex-direction: column; }
     /* Make the blog post title smaller on mobile */
     .blog-post-header h1 {

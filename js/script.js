@@ -404,3 +404,48 @@ if (blogPostContainer && typeof blogPosts !== 'undefined') {
     }
 }
 });
+
+// --- RESUME PAGE MEME LOGIC (Using a Reliable API) ---
+const memeSection = document.getElementById('meme-section');
+if (memeSection) {
+    const memeImage = document.getElementById('meme-image');
+    const newMemeBtn = document.getElementById('new-meme-btn');
+    const apiUrl = 'https://meme-api.com/gimme/ProgrammerHumor'; // API endpoint for programming memes
+
+    async function showRandomMeme() {
+        try {
+            // Show a loading state while we fetch the meme
+            if (memeImage) {
+                memeImage.src = 'https://placehold.co/600x400/1a1a2e/ffffff?text=Finding+Meme...';
+            }
+
+            const response = await fetch(apiUrl);
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+
+            // The API provides the image URL in the 'url' property
+            if (memeImage && data.url) {
+                memeImage.src = data.url;
+            }
+
+        } catch (error) {
+            console.error('Failed to fetch meme:', error);
+            // If the API fails, show an error message
+            if (memeImage) {
+                memeImage.src = 'https://placehold.co/600x400/1a1a2e/ffffff?text=Oops!+Could+not+load+meme.';
+            }
+        }
+    }
+
+    // Show a meme when the page first loads
+    showRandomMeme();
+
+    // Add a click listener to the button to show a new meme
+    if (newMemeBtn) {
+        newMemeBtn.addEventListener('click', showRandomMeme);
+    }
+}
