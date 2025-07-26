@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨Laxmidhar Panda | Interactive Portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/transitions.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body class="home-page">
+
+    <canvas id="bg-canvas"></canvas>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">Laxmidhar Panda</a>
+            
+            <!-- This is the navigation that will become the sidebar on mobile -->
+            <ul class="nav-links" id="nav-links">
+                <!-- Add a close button for the mobile menu -->
+                <li><button class="close-btn" id="close-btn" title="Close menu">&times;</button></li>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="resume.html">Resume</a></li>
+                <li><a href="github.html">GitHub</a></li>
+            </ul>
+
+            <!-- This is the hamburger menu button for mobile -->
+            <button class="hamburger" id="hamburger-btn" title="Open menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <main id="page-content">
+        <section class="content-section" id="home">
+            <div class="container hero-content">
+                <h1>Laxmidhar Panda</h1>
+                <p class="subtitle">Creative Developer & Digital Craftsman</p>
+                <a href="#about" class="cta-button" id="explore-button">Explore My World</a>
+            </div>
+        </section>
+
+        <section class="content-section" id="about">
+            <div class="container about-content">
+                <div class="about-image">
+                    <img src="images/profile-pic.jpg" alt="Laxmidhar Panda">
+                </div>
+                <div class="about-text">
+                    <h2 class="section-title">About Me</h2>
+                    <p>
+                        I'm a passionate developer from Bhubaneswar, Odisha, with a love for creating beautiful, intuitive, and high-performing digital experiences. I specialize in blending design and code to craft worlds that are not only functional but also a joy to interact with.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="news">
+             <div class="container">
+                <h2 class="section-title">Latest News</h2>
+                <div class="news-grid" id="news-grid">
+                    <!-- News items will be inserted here -->
+                </div>
+            </div>
+        </section>
+        
+        <footer class="content-section">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <form class="contact-form-footer" method="POST" action="https://formspree.io/f/mjkowaze">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="description" rows="5" placeholder="Your Message" required></textarea>
+                    <button type="submit" class="cta-button">Send Message</button>
+                </form>
+                <div class="social-links">
+                    <a href="mailto:24110185@iitgn.ac.in" target="_blank" title="Email"><i class="fa-solid fa-envelope"></i></a>
+                    <a href="https://www.linkedin.com/in/laxmidhar-panda-172993203/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://github.com/laxmidhar-panda" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                </div>
+                <p class="copyright">&copy; 2025 Laxmidhar Panda. All Rights Reserved.</p>
+            </div>
+        </footer>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
