@@ -95,7 +95,7 @@ header nav a.logo img {
 
 /* --- Hamburger Menu --- */
 .hamburger {
-    display: none;
+    display: none; /* Hidden on desktop */
     flex-direction: column;
     justify-content: space-around;
     width: 2rem;
@@ -115,6 +115,7 @@ header nav a.logo img {
     position: relative;
     transform-origin: 1px;
 }
+
 .close-btn { display: none; }
 
 /* --- Homepage Specific Styles --- */
@@ -322,6 +323,10 @@ footer.content-section {
 
 /* --- Responsive Design & Mobile Menu --- */
 @media (max-width: 768px) {
+    /* header nav .nav-links {
+    display: none;
+    } */
+
     .hamburger {
         display: flex;
     }
