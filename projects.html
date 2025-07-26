@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laxmidhar Panda | Projects</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/transitions.css"> <!-- ★★★ Add this line -->
+    <link rel="stylesheet" href="css/transitions.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
@@ -18,17 +18,17 @@
     <header>
         <nav class="container">
             <a href="index.html" class="logo">
-                <img src="images\android-chrome-512x512.png" alt="Logo"> 
+                <img src="images/favicon-32x32.png" alt="Logo"> 
                 Laxmidhar Panda
             </a>
-            <ul class="nav-links">
+            <ul class="nav-links" id="nav-links">
+                <li><button class="close-btn" id="close-btn" title="Close menu">&times;</button></li>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li><a href="projects.html" class="active">Projects</a></li>
                 <li><a href="resume.html">Resume</a></li>
                 <li><a href="github.html">GitHub</a></li>
             </ul>
-
             <button class="hamburger" id="hamburger-btn" title="Open menu">
                 <span></span>
                 <span></span>
@@ -42,29 +42,23 @@
             <div class="container">
                 <h2 class="section-title">My Projects</h2>
                 <div class="projects-grid">
+
+                    <!-- Your New Portfolio Project Card -->
                     <div class="project-card">
-                        <img src="images/project1.jpg" alt="Project 1">
+                        <img src="images\project_portfolio_main.png" alt="Portfolio Website Project"> 
                         <div class="project-info">
-                            <h3>Project Title One</h3>
-                            <p>A short description of the project, its purpose, and the technologies used.</p>
+                            <h3>Personal Portfolio Website</h3>
+                            <p>
+                                A fully responsive, interactive personal portfolio built from the ground up using HTML, CSS, and vanilla JavaScript. Features a dynamic 3D homepage animation powered by Three.js, a content-managed blog system, and a mobile-first design with a functional hamburger menu.
+                            </p>
                             <div class="project-links">
-                                <a href="#">Live Demo</a>
-                                <a href="#">Source Code</a>
+                                <a href="https://pro-laxmi.github.io/Portfolio/" target="_blank">Live Demo</a>
+                                <a href="https://github.com/pro-laxmi/Portfolio" target="_blank">Source Code</a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="project-card">
-                        <img src="images/project2.jpg" alt="Project 2">
-                        <div class="project-info">
-                            <h3>Project Title Two</h3>
-                            <p>A short description of the project, its purpose, and the technologies used.</p>
-                            <div class="project-links">
-                                <a href="#">Live Demo</a>
-                                <a href="#">Source Code</a>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- You can add more project cards here in the future -->
                     
                 </div>
             </div>

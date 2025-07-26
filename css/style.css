@@ -1,3 +1,8 @@
+@media (max-width: 900px) {
+  .toc-sidebar-container, .toc-sidebar {
+    display: none !important;
+  }
+}
 /* ========== css/style.css (Corrected with All Page Styles) ========== */
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
@@ -59,12 +64,23 @@ header {
     width: 100%;
     z-index: 100;
     padding: 20px 0;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    background: rgba(13, 13, 26, 0.7);
+    backdrop-filter: blur(12px);
+    transition: background-color 0.3s, box-shadow 0.3s, backdrop-filter 0.3s, transform 0.3s cubic-bezier(.4,0,.2,1);
 }
 header.scrolled {
-    background: rgba(13, 13, 26, 0.8);
-    backdrop-filter: blur(10px);
+    background: rgba(13, 13, 26, 0.92);
+    box-shadow: 0 2px 16px 0 rgba(0,0,0,0.12);
+    backdrop-filter: blur(16px);
 }
+@media (max-width: 768px) {
+  header {
+    background: rgba(13, 13, 26, 0.85);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 2px 16px 0 rgba(0,0,0,0.18);
+  }
+}
+/* --- Scroll to Top Button --- */
 nav {
     display: flex;
     justify-content: space-between;
@@ -283,7 +299,28 @@ footer.content-section {
 .blog-post-header { text-align: center; padding: 40px 0; }
 .blog-post-header h1 { font-size: 3em; margin-bottom: 10px; color: var(--heading-color); }
 .blog-post-meta { font-size: 1em; color: var(--secondary-color); }
-.blog-post-image { width: 100%; max-height: 500px; object-fit: cover; border-radius: 10px; margin-bottom: 40px; }
+.blog-post-image {
+    width: 100vw;
+    max-width: 100vw;
+    min-width: 0;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 0;
+    margin-bottom: 40px;
+    display: block;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+@media (min-width: 601px) {
+  .blog-post-image {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    transform: none;
+  }
+}
 .blog-post-content { max-width: 800px; margin: 0 auto; font-size: 1.1em; line-height: 1.8; }
 .blog-post-content p { margin-bottom: 20px; }
 .blog-post-content h2 { margin-top: 40px; margin-bottom: 20px; color: var(--primary-color); }
@@ -293,7 +330,27 @@ footer.content-section {
 .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
 .project-card { background: var(--card-background); border-radius: 10px; overflow: hidden; border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.3s; }
 .project-card:hover { transform: translateY(-10px); }
-.project-card img { width: 100%; height: 200px; object-fit: cover; }
+.project-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: block;
+    max-width: 100%;
+    background: #222;
+    aspect-ratio: 16/9;
+    /* fallback for browsers without aspect-ratio */
+}
+
+@media (max-width: 600px) {
+  .project-card img {
+    height: auto;
+    aspect-ratio: 16/9;
+    min-height: 140px;
+    max-height: 220px;
+  }
+}
 .project-info { padding: 25px; }
 .project-links { margin-top: 20px; }
 .project-links a { text-decoration: none; color: var(--primary-color); margin-right: 15px; font-weight: 600; }
@@ -321,12 +378,75 @@ footer.content-section {
 .rank p { font-size: 2em; font-weight: 700; }
 .rank-percent { font-size: 1.2em; font-weight: 600; padding: 8px 15px; background: rgba(255,255,255,0.2); border-radius: 20px; }
 
+/* --- Single Blog Post Page with Table of Contents --- */
+
+    .blog-post-layout {
+    display: grid; /* Using grid is more robust for this layout */
+    grid-template-columns: 3fr 1fr; /* Main content is 3x wider than sidebar */
+    align-items: flex-start;
+    gap: 3rem;
+    }
+
+    .blog-post-main {
+        flex: 3; /* Makes the main content take up more space */
+        min-width: 0; /* Prevents flexbox overflow issues */
+    }
+
+    .toc-sidebar-container {
+        flex: 1; /* Sidebar takes up less space */
+    }
+
+    .toc-sidebar {
+        position: sticky; /* Makes the sidebar stay in place on scroll */
+        top: 120px; /* Positions it below your fixed header */
+    }
+
+    .toc-sidebar h3 {
+        font-size: 1.1em;
+        color: var(--heading-color);
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    #toc-list {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    #toc-list li a {
+        display: block;
+        padding: 10px 15px;
+        color: var(--text-color);
+        text-decoration: none;
+        border-radius: 5px;
+        transition: all 0.2s ease-in-out;
+        position: relative;
+        border-left: 2px solid transparent; /* Placeholder border */
+    }
+
+    #toc-list li a:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: var(--primary-color);
+    }
+
+    /* This is the glowing pointer style */
+    #toc-list li a.active {
+        color: var(--primary-color);
+        font-weight: 600;
+        border-left-color: var(--primary-color); /* The solid part of the pointer */
+        box-shadow: inset 3px 0 15px -4px var(--primary-color); /* The glow effect */
+    }
+
 /* --- Responsive Design & Mobile Menu --- */
 @media (max-width: 768px) {
-    /* header nav .nav-links {
-    display: none;
-    } */
-
+    /* Add this inside your existing @media block */
+    .toc-sidebar-container {
+        display: none;
+    }
+    .blog-post-layout {
+    display: block; /* Revert from grid to a simple block layout */
+    }
     .hamburger {
         display: flex;
     }
@@ -371,6 +491,23 @@ footer.content-section {
     }
     .about-content { flex-direction: column; text-align: center; }
     .blog-layout { flex-direction: column; }
+    /* Make the blog post title smaller on mobile */
+    .blog-post-header h1 {
+        font-size: 2.2em; /* Was 3em, much smaller now */
+        line-height: 1.3; /* Improves readability */
+    }
+
+    /* Make the main blog text smaller and more readable on mobile */
+    .blog-post-content {
+        font-size: 1em; /* Was 1.1em */
+        line-height: 1.7; /* A bit more spacing between lines on mobile */
+    }
+
+    /* Make the subheadings smaller on mobile */
+    .blog-post-content h2 {
+        font-size: 1.5em; /* Adjust as needed */
+    }
+    
 }
 
 /* --- Generic Footer for other pages --- */

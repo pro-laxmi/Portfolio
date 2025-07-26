@@ -1,6 +1,29 @@
 /* ========== js/script.js (Complete and Corrected) ========== */
 
 document.addEventListener('DOMContentLoaded', () => {
+    // --- PROJECTS PAGE: Render projects dynamically from data.js ---
+    const projectsGrid = document.querySelector('.projects-grid');
+    if (projectsGrid && typeof projectData !== 'undefined') {
+        // Sort by id descending (unique id, newest first)
+        const sortedProjects = [...projectData].sort((a, b) => b.id - a.id);
+        projectsGrid.innerHTML = '';
+        sortedProjects.forEach(project => {
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            card.innerHTML = `
+                <img src="${project.image}" alt="${project.title}">
+                <div class="project-info">
+                    <h3>${project.title}</h3>
+                    <p>${project.summary}</p>
+                    <div class="project-links">
+                        <a href="${project.liveLink}" target="_blank">Live Demo</a>
+                        <a href="${project.sourceLink}" target="_blank">Source Code</a>
+                    </div>
+                </div>
+            `;
+            projectsGrid.appendChild(card);
+        });
+    }
 
     // --- 1. GLOBAL FUNCTIONALITY (Runs on all pages) ---
 
@@ -31,10 +54,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Header Scroll Effect
+    // Header Hide on Scroll Up, Show on Scroll Down (for blog post and all pages)
     if (header) {
+        let lastScrollY = window.scrollY;
+        let ticking = false;
+        let lastDirection = null;
+        function onScroll() {
+            const currentY = window.scrollY;
+            if (currentY > lastScrollY && currentY > 80) {
+                // Scrolling down
+                if (lastDirection !== 'down') {
+                    header.style.transform = 'translateY(-100%)';
+                    lastDirection = 'down';
+                }
+            } else {
+                // Scrolling up
+                if (lastDirection !== 'up') {
+                    header.style.transform = 'translateY(0)';
+                    lastDirection = 'up';
+                }
+            }
+            lastScrollY = currentY;
+        }
         window.addEventListener('scroll', () => {
-            header.classList.toggle('scrolled', window.scrollY > 50);
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    onScroll();
+                    ticking = false;
+                });
+                ticking = true;
+            }
         });
+        // Initial state
+        header.style.transition = 'transform 0.3s cubic-bezier(.4,0,.2,1)';
     }
 
     // Reading Progress Bar
@@ -78,19 +130,47 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        const newsGrid = document.getElementById('news-grid');
-        if (newsGrid && typeof blogPosts !== 'undefined') {
-            const latestPosts = blogPosts.slice(0, 3);
-            latestPosts.forEach(post => {
-                const newsItem = document.createElement('div');
-                newsItem.className = 'news-item';
-                newsItem.innerHTML = `
-                    <h3><a href="blog-post.html?id=${post.id}">${post.title}</a></h3>
-                    <p>${post.summary}</p>
-                `;
-                newsGrid.appendChild(newsItem);
-            });
-        }
+        // --- This is the NEW code to paste in script.js ---
+    const newsGrid = document.getElementById('news-grid');
+    if (newsGrid && typeof blogPosts !== 'undefined' && typeof projectData !== 'undefined') {
+
+        // 1. Add a 'type' property to each item to know what it is
+        const allBlogs = blogPosts.map(post => ({...post, type: 'blog'}));
+        const allProjects = projectData.map(project => ({...project, type: 'project'}));
+
+        // 2. Combine blogs and projects into one single "news feed"
+        const newsFeed = [...allBlogs, ...allProjects];
+
+        // 3. Sort the entire feed by date, newest first
+        newsFeed.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        // 4. Get the 3 most recent items
+        const latestItems = newsFeed.slice(0, 3);
+
+        // 5. Loop through the latest items and display them
+        latestItems.forEach(item => {
+            const newsItem = document.createElement('div');
+            newsItem.className = 'news-item';
+
+            let link = '';
+            let titlePrefix = '';
+
+            // Check the type to create the correct link and title
+            if (item.type === 'blog') {
+                link = `blog-post.html?id=${item.id}`;
+                titlePrefix = 'New Blog Post: ';
+            } else if (item.type === 'project') {
+                link = 'projects.html'; // Link to the main projects page
+                titlePrefix = 'New Project: ';
+            }
+
+            newsItem.innerHTML = `
+                <h3><a href="${link}">${titlePrefix}${item.title}</a></h3>
+                <p>${item.summary}</p>
+            `;
+            newsGrid.appendChild(newsItem);
+        });
+    }
 
         const bgCanvas = document.getElementById('bg-canvas');
         if (bgCanvas) {
@@ -147,6 +227,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- ★★★ RESTORED BLOG LIST PAGE LOGIC ★★★ ---
+    // --- BLOG PAGE: Add scroll-to-top button ---
+    if (document.getElementById('blog')) {
+        let scrollBtn = document.getElementById('scrollToTopBtn');
+        if (!scrollBtn) {
+            scrollBtn = document.createElement('button');
+            scrollBtn.id = 'scrollToTopBtn';
+            scrollBtn.title = 'Scroll to top';
+            scrollBtn.innerHTML = '<i class="fa fa-arrow-up"></i>';
+            document.body.appendChild(scrollBtn);
+        }
+        scrollBtn.style.display = 'none';
+        scrollBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                scrollBtn.style.display = 'block';
+            } else {
+                scrollBtn.style.display = 'none';
+            }
+        });
+    }
     const blogPage = document.getElementById('blog');
     if (blogPage && typeof blogPosts !== 'undefined') {
         const postsGrid = document.getElementById('blog-posts-grid');
@@ -215,27 +315,92 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- ★★★ RESTORED SINGLE BLOG POST PAGE LOGIC ★★★ ---
-    const blogPostContainer = document.getElementById('blog-post-container');
-    if (blogPostContainer && typeof blogPosts !== 'undefined') {
-        const urlParams = new URLSearchParams(window.location.search);
-        const postId = parseInt(urlParams.get('id'));
-        const post = blogPosts.find(p => p.id === postId);
-        if (post) {
-            document.title = `${post.title} | Laxmidhar Panda`;
-            const containerDiv = blogPostContainer.querySelector('.container');
-            containerDiv.innerHTML = `
-                <div class="blog-post-header">
-                    <h1>${post.title}</h1>
-                    <p class="blog-post-meta">By ${post.author} on ${post.date}</p>
-                </div>
-                <img src="${post.image}" alt="${post.title}" class="blog-post-image">
-                <div class="blog-post-content">
-                    ${post.content}
-                </div>
-            `;
-        } else {
-            blogPostContainer.innerHTML = `<div class="container"><h2 class="section-title">Blog Post Not Found</h2><p style="text-align:center;">Sorry, we couldn't find the blog post you were looking for.</p></div>`;
+    // --- SINGLE BLOG POST PAGE LOGIC ---
+    // --- SINGLE BLOG POST PAGE LOGIC (Corrected) ---
+    // --- SINGLE BLOG POST PAGE LOGIC (Definitive Fix) ---
+// --- SINGLE BLOG POST PAGE LOGIC (Definitive Fix) ---
+const blogPostContainer = document.getElementById('blog-post-container');
+if (blogPostContainer && typeof blogPosts !== 'undefined') {
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = parseInt(urlParams.get('id'));
+    const post = blogPosts.find(p => p.id === postId);
+
+    if (post) {
+        document.title = `${post.title} | Laxmidhar Panda`;
+        
+        const mainArticle = blogPostContainer.querySelector('.blog-post-main');
+        mainArticle.innerHTML = `
+            <div class="blog-post-header">
+                <h1>${post.title}</h1>
+                <p class="blog-post-meta">By ${post.author} on ${post.date}</p>
+            </div>
+            <img src="${post.image}" alt="${post.title}" class="blog-post-image">
+            <div class="blog-post-content">
+                ${post.content}
+            </div>
+        `;
+
+        const tocList = document.getElementById('toc-list');
+        const headings = mainArticle.querySelectorAll('h2');
+        const tocSidebar = document.getElementById('toc-sidebar');
+
+        if (headings.length > 0 && tocList && tocSidebar) {
+            headings.forEach(heading => {
+                const listItem = document.createElement('li');
+                const link = document.createElement('a');
+                link.textContent = heading.textContent;
+                link.href = `#${heading.id}`;
+                // Add a progress bar span for glowing effect
+                const progress = document.createElement('span');
+                progress.className = 'toc-progress';
+                listItem.appendChild(link);
+                listItem.appendChild(progress);
+                tocList.appendChild(listItem);
+            });
+
+            const tocLinks = tocList.querySelectorAll('a');
+            
+            // This is the new, more reliable scroll logic
+            const activateLink = (id) => {
+                tocLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('active');
+                    }
+                });
+            };
+
+            const handleScroll = () => {
+                let current = '';
+                headings.forEach(heading => {
+                    const headingTop = heading.getBoundingClientRect().top;
+                    // This checks if the heading has scrolled past a certain point (150px from the top)
+                    if (headingTop < 150) {
+                        current = heading.getAttribute('id');
+                    }
+                });
+
+                // If we've scrolled past all headings, keep the last one active
+                // Otherwise, if no heading is past the mark (we're at the top), activate the first one
+                if (current === '' && tocLinks.length > 0) {
+                    current = headings[0].getAttribute('id');
+                }
+                
+                activateLink(current);
+            };
+
+            // Run the function once on load and then on every scroll event
+            handleScroll();
+            window.addEventListener('scroll', handleScroll);
+
+        } else if (tocSidebar) {
+            // If there are no headings in the post, hide the sidebar completely
+            tocSidebar.style.display = 'none';
         }
+
+    } else {
+        // If the blog post ID is not found, show an error
+        blogPostContainer.innerHTML = `<div class="container"><h2 class="section-title">Blog Post Not Found</h2><p style="text-align:center;">Sorry, we couldn't find the blog post you were looking for.</p></div>`;
     }
+}
 });
