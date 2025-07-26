@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laxmidhar Panda | GitHub Stats</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/transitions.css"> <!-- ★★★ Add this line -->
+    <link rel="stylesheet" href="css/transitions.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
@@ -18,7 +18,7 @@
     <header>
         <nav class="container">
             <a href="index.html" class="logo">
-                <img src="images\android-chrome-512x512.png" alt="Logo"> 
+                <img src="images/favicon-32x32.png" alt="Logo"> 
                 Laxmidhar Panda
             </a>
             <ul class="nav-links" id="nav-links">
@@ -29,7 +29,6 @@
                 <li><a href="resume.html">Resume</a></li>
                 <li><a href="github.html" class="active">GitHub</a></li>
             </ul>
-
             <button class="hamburger" id="hamburger-btn" title="Open menu">
                 <span></span>
                 <span></span>
@@ -42,48 +41,28 @@
         <section id="github-stats" class="page-section">
             <div class="container">
                 <h2 class="section-title">My GitHub Stats</h2>
+                
                 <div class="github-card">
                     <div class="github-header">
-                        <img src="images/profile-pic.jpg" alt="GitHub Avatar" class="github-avatar">
+                        <!-- This now shows your real picture as a fallback -->
+                        <img src="images/profile-pic.jpg" alt="GitHub Avatar" class="github-avatar" id="gh-avatar">
                         <div>
-                            <h4>Laxmidhar Panda's GitHub Stats</h4>
-                            <p>Visit my profile: <a href="https://github.com/your-username" target="_blank">@your-username</a></p>
+                            <!-- This now shows your real name as a fallback -->
+                            <h4 id="gh-name">Laxmidhar Panda</h4>
+                            <p>Visit my profile: <a href="https://github.com/pro-laxmi" target="_blank" id="gh-url">@pro-laxmi</a></p>
                         </div>
                     </div>
-                    <div class="github-body">
-                        <div class="stat-item">
-                            <i class="fa-solid fa-star"></i>
-                            <p>Total Stars</p>
-                            <span>1,234</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fa-solid fa-code-commit"></i>
-                            <p>Total Commits</p>
-                            <span>5,678</span>
-                        </div>
-                         <div class="stat-item">
-                            <i class="fa-solid fa-code-pull-request"></i>
-                            <p>Total PRs</p>
-                            <span>123</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fa-solid fa-circle-dot"></i>
-                            <p>Total Issues</p>
-                            <span>45</span>
-                        </div>
-                         <div class="stat-item">
-                            <i class="fa-solid fa-puzzle-piece"></i>
-                            <p>Contributed to</p>
-                            <span>67</span>
-                        </div>
+                    
+                    <div class="github-stats-body">
+                        <img src="https://github-readme-stats.vercel.app/api?username=pro-laxmi&show_icons=true&theme=dracula&hide_border=true&include_all_commits=true&count_private=true" alt="Laxmidhar's GitHub Stats" />
+                        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=pro-laxmi&layout=compact&theme=dracula&hide_border=true" alt="Laxmidhar's Top Languages" />
                     </div>
-                    <div class="github-footer">
-                        <div class="rank">
-                            <span>Rank</span>
-                            <p>A++</p>
-                        </div>
-                        <div class="rank-percent">Top 1%</div>
+
+                    <hr class="github-card-divider">
+                    <div class="github-trophy-body">
+                        <img src="https://github-profile-trophy.vercel.app/?username=pro-laxmi&theme=dracula&no-frame=true&no-bg=true&margin-w=15&column=5" alt="Laxmidhar's GitHub Trophies" />
                     </div>
+
                 </div>
             </div>
         </section>

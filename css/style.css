@@ -522,3 +522,18 @@ footer:not(.content-section) h3 { color: var(--heading-color); margin-bottom: 10
 footer:not(.content-section) .social-links a { color: var(--text-color); font-size: 1.8em; margin: 0 15px; transition: color 0.3s, transform 0.3s; }
 footer:not(.content-section) .social-links a:hover { color: var(--primary-color); transform: translateY(-5px); }
 footer:not(.content-section) .copyright { font-size: 0.9em; margin-top: 20px; }
+
+.github-card-divider {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 0 25px; /* Adds spacing on the sides */
+}
+
+.github-trophy-body {
+    padding: 20px;
+}
+
+.github-trophy-body img {
+    width: 100%;
+}
