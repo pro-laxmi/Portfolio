@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
         function onScroll() {
             const currentY = window.scrollY;
             if (currentY > lastScrollY && currentY > 80) {
-                // Scrolling down
                 if (lastDirection !== 'down') {
                     header.style.transform = 'translateY(-100%)';
                     lastDirection = 'down';
@@ -131,44 +130,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // --- This is the NEW code to paste in script.js ---
-    const newsGrid = document.getElementById('news-grid');
-    if (newsGrid && typeof blogPosts !== 'undefined' && typeof projectData !== 'undefined') {
+    // --- This is the NEW code to paste in script.js ---
+    const newsListContainer = document.getElementById('news-list-container');
+    if (newsListContainer && typeof blogPosts !== 'undefined' && typeof projectData !== 'undefined') {
 
-        // 1. Add a 'type' property to each item to know what it is
         const allBlogs = blogPosts.map(post => ({...post, type: 'blog'}));
         const allProjects = projectData.map(project => ({...project, type: 'project'}));
-
-        // 2. Combine blogs and projects into one single "news feed"
         const newsFeed = [...allBlogs, ...allProjects];
 
-        // 3. Sort the entire feed by date, newest first
+        // Sort the entire feed by date, newest first
         newsFeed.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        // 4. Get the 3 most recent items
-        const latestItems = newsFeed.slice(0, 3);
+        // Get the 7 most recent items
+        const latestItems = newsFeed.slice(0, 7);
 
-        // 5. Loop through the latest items and display them
+        // Function to format the date nicely (e.g., "Jul 28, 2025")
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+
         latestItems.forEach(item => {
-            const newsItem = document.createElement('div');
-            newsItem.className = 'news-item';
+            const newsRow = document.createElement('div');
+            newsRow.className = 'news-item-row';
 
             let link = '';
-            let titlePrefix = '';
+            let description = '';
 
-            // Check the type to create the correct link and title
             if (item.type === 'blog') {
                 link = `blog-post.html?id=${item.id}`;
-                titlePrefix = 'New Blog Post: ';
+                description = `Published a new blog post: <a href="${link}">${item.title}</a>.`;
             } else if (item.type === 'project') {
-                link = 'projects.html'; // Link to the main projects page
-                titlePrefix = 'New Project: ';
+                link = item.liveLink || 'projects.html';
+                description = `Launched a new project: <a href="${link}" target="_blank">${item.title}</a>.`;
             }
 
-            newsItem.innerHTML = `
-                <h3><a href="${link}">${titlePrefix}${item.title}</a></h3>
-                <p>${item.summary}</p>
+            newsRow.innerHTML = `
+                <div class="news-date">${formatDate(item.date)}</div>
+                <div class="news-description">${description}</div>
             `;
-            newsGrid.appendChild(newsItem);
+            newsListContainer.appendChild(newsRow);
         });
     }
 

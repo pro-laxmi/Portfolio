@@ -19,7 +19,6 @@
     --secondary-color: #9c88ff;
 }
 
-/* --- General Styles --- */
 * {
     margin: 0;
     padding: 0;
@@ -187,15 +186,52 @@ header nav a.logo img {
     padding: 2.5rem;                  /* Space inside the card */
     border: 1px solid rgba(255, 255, 255, 0.1); /* A subtle border to catch the light */
 }
-.news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-.news-item {
-    background: var(--glass-card-background);
-    border: 1px solid var(--border-color);
-    padding: 25px;
-    border-radius: 10px;
-    backdrop-filter: blur(5px);
+/* --- Add this new block to style.css for the News List --- */
+
+/* This is the NEW, updated rule */
+.news-list-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(26, 26, 46, 0.6); /* Semi-transparent glass background */
+    backdrop-filter: blur(10px);      /* The frosted glass effect */
+    border-radius: 15px;              /* Rounded corners for the card */
+    padding: 2rem;                    /* Space inside the card */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* A subtle border */
 }
-.news-item h3 a { text-decoration: none; color: var(--heading-color); }
+
+.news-item-row {
+    display: grid;
+    grid-template-columns: 150px 1fr; /* Date column | Description column */
+    gap: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    align-items: start;
+}
+
+.news-item-row:last-child {
+    border-bottom: none; /* Remove border from the last item */
+}
+
+.news-date {
+    font-weight: 600;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.news-description {
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.news-description a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.news-description a:hover {
+    text-decoration: underline;
+}
 
 /* --- Homepage Footer Contact Form --- */
 footer.content-section {
@@ -466,6 +502,10 @@ footer.content-section {
 /* --- Responsive Design & Mobile Menu --- */
 @media (max-width: 768px) {
     /* Add this inside your existing @media block */
+    .news-item-row {
+    grid-template-columns: 1fr; /* Switch to a single column */
+    gap: 0.5rem;
+    }
     .toc-sidebar-container {
         display: none;
     }
